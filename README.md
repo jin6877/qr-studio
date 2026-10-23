@@ -12,7 +12,7 @@
 
 ## 🔗 라이브 데모
 
-**https://qr-studio-ten-kappa.vercel.app**
+**https://qr-studio-ruddy.vercel.app**
 
 ## ✨ 주요 기능
 
