@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; }
+      :root {
+        --indigo: #4f46e5;
+        --indigo-700: #4338ca;
+        --teal: #14b8a6;
+        --ink: #1b1f3b;
+      }
+      .poster {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        position: relative;
+        background:
+          radial-gradient(900px 500px at 88% -10%, rgba(20, 184, 166, 0.16), transparent 60%),
+          radial-gradient(800px 600px at -8% 110%, rgba(79, 70, 229, 0.18), transparent 55%),
+          linear-gradient(135deg, #ffffff 0%, #f3f4fb 100%);
+        font-family: -apple-system, BlinkMacSystemFont, "Pretendard",
+          "Malgun Gothic", "Apple SD Gothic Neo", "Segoe UI", sans-serif;
+        display: flex;
+        align-items: center;
+      }
+      /* subtle dot grid */
+      .poster::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(27, 31, 59, 0.05) 1.5px, transparent 1.5px);
+        background-size: 26px 26px;
+        mask-image: linear-gradient(90deg, #000 0%, transparent 62%);
+        -webkit-mask-image: linear-gradient(90deg, #000 0%, transparent 62%);
+      }
+
+      .left {
+        position: relative;
+        z-index: 3;
+        width: 560px;
+        padding: 0 0 0 68px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 34px;
+      }
+      .mark {
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+        background: linear-gradient(140deg, var(--indigo), var(--indigo-700));
+        box-shadow: 0 12px 28px -8px rgba(79, 70, 229, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .mark svg { width: 32px; height: 32px; }
+      .wordmark { font-size: 27px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+      .wordmark span { color: var(--indigo); }
+
+      h1 {
+        font-size: 55px;
+        line-height: 1.12;
+        font-weight: 800;
+        letter-spacing: -0.035em;
+        color: var(--ink);
+      }
+      h1 .grad {
+        background: linear-gradient(100deg, var(--indigo) 10%, var(--teal) 95%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .tag {
+        margin-top: 22px;
+        font-size: 20px;
+        line-height: 1.5;
+        color: #5b6180;
+        font-weight: 500;
+        max-width: 470px;
+      }
+      .pills {
+        margin-top: 34px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        border-radius: 999px;
+        font-size: 15.5px;
+        font-weight: 600;
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid rgba(27, 31, 59, 0.08);
+        box-shadow: 0 4px 14px -8px rgba(27, 31, 59, 0.3);
+      }
+      .pill .dot { width: 9px; height: 9px; border-radius: 999px; }
+
+      /* right: browser mockup w/ product shot */
+      .right {
+        position: absolute;
+        right: -34px;
+        top: 50%;
+        transform: translateY(-50%) rotate(-2deg);
+        width: 640px;
+        z-index: 2;
+      }
+      .browser {
+        border-radius: 18px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow:
+          0 50px 90px -30px rgba(31, 38, 89, 0.5),
+          0 10px 30px -15px rgba(31, 38, 89, 0.35);
+        border: 1px solid rgba(27, 31, 59, 0.08);
+      }
+      .bar {
+        height: 44px;
+        background: #f1f2f8;
+        border-bottom: 1px solid rgba(27, 31, 59, 0.06);
+        display: flex;
+        align-items: center;
+        padding: 0 16px;
+        gap: 8px;
+      }
+      .bar i { width: 12px; height: 12px; border-radius: 999px; display: block; }
+      .url {
+        margin-left: 14px;
+        flex: 1;
+        height: 26px;
+        border-radius: 8px;
+        background: #fff;
+        border: 1px solid rgba(27, 31, 59, 0.08);
+        display: flex;
+        align-items: center;
+        padding: 0 12px;
+        font-size: 13px;
+        color: #8a90a8;
+        gap: 7px;
+      }
+      .shot {
+        width: 640px;
+        height: 400px;
+        object-fit: cover;
+        object-position: top left;
+        display: block;
+      }
+
+      /* floating QR badge */
+      .float {
+        position: absolute;
+        left: 494px;
+        bottom: 52px;
+        z-index: 4;
+        background: #fff;
+        border-radius: 18px;
+        padding: 16px;
+        box-shadow: 0 28px 60px -24px rgba(31, 38, 89, 0.55);
+        border: 1px solid rgba(27, 31, 59, 0.06);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        transform: rotate(3deg);
+      }
+      .float .qr {
+        width: 82px; height: 82px; border-radius: 10px;
+        background: #0f766e;
+      }
+      .float .meta .k { font-size: 13px; color: #8a90a8; font-weight: 600; }
+      .float .meta .v { font-size: 17px; color: var(--ink); font-weight: 800; margin-top: 2px; }
+      .float .meta .s { font-size: 12.5px; color: var(--teal); font-weight: 700; margin-top: 5px; display: flex; align-items: center; gap: 5px; }
+    </style>
+  </head>
+  <body>
+    <div class="poster">
+      <div class="left">
+        <div class="brand">
+          <span class="mark">
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="3" width="7" height="7" rx="1.6" fill="#fff"/>
+              <rect x="14" y="3" width="7" height="7" rx="1.6" fill="#fff"/>
+              <rect x="3" y="14" width="7" height="7" rx="1.6" fill="#fff"/>
+              <rect x="14.5" y="14.5" width="3" height="3" rx="0.6" fill="#a5b4fc"/>
+              <rect x="18" y="18" width="3" height="3" rx="0.6" fill="#a5b4fc"/>
+              <rect x="14.5" y="18" width="3" height="3" rx="0.6" fill="#c7d2fe"/>
+            </svg>
+          </span>
+          <span class="wordmark">QR <span>Studio</span></span>
+        </div>
+
+        <h1>QR, 브라우저에서<br />바로 만들고 꾸며서<br /><span class="grad">다운로드</span></h1>
+
+        <p class="tag">
+          링크·와이파이·연락처 QR을 실시간으로 만들고,
+          색·로고까지 입혀 PNG·SVG로 저장하세요.
+        </p>
+
+        <div class="pills">
+          <span class="pill"><span class="dot" style="background:#4f46e5"></span>와이파이 · 링크 · 연락처</span>
+          <span class="pill"><span class="dot" style="background:#14b8a6"></span>PNG · SVG · 복사</span>
+          <span class="pill"><span class="dot" style="background:#1b1f3b"></span>100% 브라우저 처리</span>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="browser">
+          <div class="bar">
+            <i style="background:#ff5f57"></i>
+            <i style="background:#febc2e"></i>
+            <i style="background:#28c840"></i>
+            <span class="url">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8a90a8" stroke-width="2.4"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+              qr-studio.vercel.app
+            </span>
+          </div>
+          <img class="shot" src="screenshot.png" alt="QR Studio" />
+        </div>
+      </div>
+
+      <div class="float">
+        <div class="qr">
+          <svg viewBox="0 0 24 24" width="82" height="82" fill="#fff" style="padding:10px;box-sizing:border-box">
+            <rect x="2" y="2" width="7" height="7" rx="1" fill="none" stroke="#fff" stroke-width="1.6"/>
+            <rect x="4" y="4" width="3" height="3" fill="#fff"/>
+            <rect x="15" y="2" width="7" height="7" rx="1" fill="none" stroke="#fff" stroke-width="1.6"/>
+            <rect x="17" y="4" width="3" height="3" fill="#fff"/>
+            <rect x="2" y="15" width="7" height="7" rx="1" fill="none" stroke="#fff" stroke-width="1.6"/>
+            <rect x="4" y="17" width="3" height="3" fill="#fff"/>
+            <rect x="12" y="2" width="1.6" height="1.6"/><rect x="12" y="6" width="1.6" height="1.6"/>
+            <rect x="12" y="12" width="2" height="2"/><rect x="16" y="12" width="2" height="2"/>
+            <rect x="20" y="12" width="2" height="2"/><rect x="12" y="16" width="2" height="2"/>
+            <rect x="14" y="18" width="2" height="2"/><rect x="18" y="15" width="2" height="2"/>
+            <rect x="20" y="19" width="2" height="2"/><rect x="16" y="20" width="2" height="2"/>
+          </svg>
+        </div>
+        <div class="meta">
+          <div class="k">WIFI</div>
+          <div class="v">Blue Bottle Cafe</div>
+          <div class="s">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#14b8a6" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13a10 10 0 0 1 14 0"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/><path d="M2 8.8a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+            스캔하면 바로 접속
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
